@@ -4,7 +4,17 @@ on: [push,pull_request]
 
 
 jobs:
-  test-linux:
+  get-version-set:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check out repository code"
+        uses: actions/checkout@v2
+        with:
+          repository: 'nso-developer/nso-docker'
+          path: 'nso-docker'
+
+  test:
+    needs: get-version-set
     runs-on: ubuntu-latest
     container:
       image: registry.gitlab.com/nso-developer/ci-runner-image:latest
