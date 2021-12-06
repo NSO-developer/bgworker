@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: registry.gitlab.com/nso-developer/ci-runner-image:latest
+    env:
+      NSO_VERSION: 5.5.2
     steps:
       - name: "Install build prerequisites"
         run: |
