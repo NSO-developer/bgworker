@@ -16,7 +16,6 @@ jobs:
 #          path: 'nso-docker'
       - id: get-versions
         run: |
-          echo "::set-output name=verz::$(cat nso-docker/version-sets/supported-nso/versions.json)"
           echo ::set-output name=vers::[{"ver": "5.5.2"}]
 
 
