@@ -10,6 +10,7 @@ jobs:
       image: registry.gitlab.com/nso-developer/ci-runner-image:latest
     env:
       NSO_VERSION: 5.5.2
+      NSO_IMAGE_PATH: ghcr.io/nso-developer/nso-docker/
     steps:
       - name: "Install build prerequisites"
         run: |
