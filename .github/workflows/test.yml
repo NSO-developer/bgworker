@@ -23,6 +23,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Check out repository code"
         uses: actions/checkout@v2
+      - name: "Check if we can get NSO in Docker image"
+        run: docker pull ghcr.io/nso-developer/nso-docker/cisco-nso-base:5.5.2
       - name: "Building"
         run: make build
       - name: "Starting testenv"
