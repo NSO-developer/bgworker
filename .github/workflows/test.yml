@@ -1,0 +1,24 @@
+name: Build & Test
+
+on: [push,pull_request]
+
+
+jobs:
+  test-linux:
+    runs-on: ubuntu-latest
+    container:
+      image: registry.gitlab.com/nso-developer/ci-runner-image:latest
+    steps:
+      - name: "Install build prerequisites"
+        run: |
+          which curl docker expect gpg2 sshpass xmlstarlet >/dev/null || (echo "Installing prerequisites..." && apt-get -y update && DEBIAN_FRONTEND=noninteractive apt-get install -qy apt-transport-https ca-certificates curl expect gnupg2 software-properties-common sshpass xmlstarlet; which docker || (echo "Installing docker..." && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && apt-key fingerprint 0EBFCD88 && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && apt-get -y update && apt-get -qy install -qy docker-ce docker-ce-cli containerd.io))
+      - name: "Check out repository code"
+        uses: actions/checkout@v2
+      - name: "Building"
+        run: make build
+      - name: "Starting testenv"
+        run: make testenv-start testenv-wait-healthy
+      - name: "Running tests"
+        run: make testenv-test
+      - name: "Checking logs"
+        run: make testenv-check-logs
