@@ -9,14 +9,15 @@ jobs:
     outputs:
       versions_json: ${{ steps.get-versions.outputs.vers }}
     steps:
-#      - name: "Check out repository code"
-#        uses: actions/checkout@v2
-#        with:
-#          repository: 'nso-developer/nso-docker'
-#          path: 'nso-docker'
+      - name: "Check out repository code"
+        uses: actions/checkout@v2
+        with:
+          repository: 'nso-developer/nso-docker'
+          path: 'nso-docker'
+      - name: "Cat lod.json"
+        run: cat nso-docker/version-sets/supported-nso/lod.json
       - id: get-versions
-        run: |
-          echo '::set-output name=vers::[{"ver": "5.5.2"}]'
+        run: echo "::set-output name=vers::$(cat nso-docker/version-sets/supported-nso/lod.json)"
 
 
   test:
