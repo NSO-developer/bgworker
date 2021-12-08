@@ -2,6 +2,7 @@ name: Build & Test
 
 on: [push,pull_request]
 
+#run: echo "::set-output name=vers::$(cat nso-docker/version-sets/supported-nso/lod.json)"
 
 jobs:
   get_version_set:
@@ -15,8 +16,8 @@ jobs:
           repository: 'nso-developer/nso-docker'
           path: 'nso-docker'
       - id: get-versions
-        run: echo "::set-output name=vers::$(cat nso-docker/version-sets/supported-nso/lod.json)"
-
+        run: |
+          echo '::set-output name=vers::[{"version": "5.5.2"}]'
 
   test:
     needs: get_version_set
